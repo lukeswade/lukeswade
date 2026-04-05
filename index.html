@@ -850,6 +850,83 @@
     @media (max-width: 640px) {
       .family-grid { grid-template-columns: 1fr; }
     }
+
+    /* ─── Personal Modal ────────────────────────────────────────── */
+    #personal-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    #personal-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+    .modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8,12,20,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .modal-content {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-h);
+      border-radius: 24px;
+      width: min(800px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: clamp(24px, 5vw, 60px);
+      z-index: 2;
+      transform: scale(0.95);
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+    }
+    #personal-modal.active .modal-content {
+      transform: scale(1);
+    }
+    .modal-close {
+      position: absolute;
+      top: 24px; right: 24px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .modal-close:hover {
+      background: var(--accent);
+      color: #fff;
+      transform: rotate(90deg);
+    }
+    .modal-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .modal-header h3 {
+      font-family: var(--font-disp);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .modal-header p {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
     .edu-school {
       font-family: var(--font-disp);
       font-size: 1.25rem;
@@ -925,6 +1002,7 @@
       font-size: 0.82rem;
       color: var(--muted);
       text-decoration: none;
+      padding: 8px 0;
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--text); }
@@ -972,7 +1050,6 @@
   <!-- Mobile Nav -->
   <div class="mobile-overlay" id="mobile-overlay"></div>
   <div class="mobile-drawer" id="mobile-drawer">
-    <a href="#family">Family</a>
     <a href="#projects">Projects</a>
     <a href="#experience">Experience</a>
     <a href="#education">Education</a>
@@ -989,7 +1066,6 @@
   <nav>
     <a href="#hero" class="nav-logo">Luke <span>Wade</span></a>
     <ul class="nav-links">
-      <li><a href="#family">Family</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#education">Education</a></li>
@@ -1073,32 +1149,6 @@
     </div>
   </section>
 
-  <!-- Family -->
-  <section id="family">
-    <div class="container">
-      <p class="section-label reveal">Most Important</p>
-      <h2 class="section-title reveal reveal-delay-1">
-        Family (The Why)
-      </h2>
-      <p class="section-subtitle reveal reveal-delay-2">
-        Beyond the enterprise systems and side projects, this is my core ROI. Building a future for the ones who matter most.
-      </p>
-
-      <div class="family-grid reveal reveal-delay-3">
-        <div class="family-item">
-          <img src="assets/family/family-1.jpg" alt="Luke's three children sitting together in a nursery with a gift">
-        </div>
-        <div class="family-item">
-          <img src="assets/family/family-2.jpg" alt="Luke's children celebrating Vivienne's first birthday with a custom banner">
-        </div>
-        <div class="family-item">
-          <img src="assets/family/family-3.jpg" alt="Two boys happily building a snowman in the backyard snow">
-        </div>
-        <div class="family-item">
-          <img src="assets/family/family-4.jpg" alt="Two boys in matching Dallas jerseys smiling in the kitchen">
-        </div>
-      </div>
-    </div>
   </section>
 
   <div class="divider"></div>
@@ -1512,6 +1562,7 @@
           <div class="footer-copy" style="margin-top:4px;">© 2026 · Built with care in Plano, TX</div>
         </div>
         <div class="footer-links">
+          <a href="javascript:void(0)" id="personal-trigger">Personal</a>
           <a href="https://r3cent.com" target="_blank" rel="noopener">r3cent</a>
           <a href="https://kidmode.io" target="_blank" rel="noopener">kidmode</a>
           <a href="https://vaultly.me" target="_blank" rel="noopener">vaultly</a>
@@ -1523,6 +1574,34 @@
       </div>
     </div>
   </footer>
+
+  <!-- Personal Modal -->
+  <div id="personal-modal">
+    <div class="modal-overlay" id="modal-overlay-close"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close-btn" aria-label="Close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="modal-header">
+        <h3>Family (Most Important)</h3>
+        <p>Beyond the tech and enterprise systems, this is the context for everything I build.</p>
+      </div>
+      <div class="family-grid">
+        <div class="family-item">
+          <img src="assets/family/family-1.jpg" alt="Luke's three children sitting together in a nursery with a gift">
+        </div>
+        <div class="family-item">
+          <img src="assets/family/family-2.jpg" alt="Luke's children celebrating Vivienne's first birthday with a custom banner">
+        </div>
+        <div class="family-item">
+          <img src="assets/family/family-3.jpg" alt="Two boys happily building a snowman in the backyard snow">
+        </div>
+        <div class="family-item">
+          <img src="assets/family/family-4.jpg" alt="Two boys in matching Dallas jerseys smiling in the kitchen">
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ─── Theme Toggle & Persistence ──────────────────────────────
@@ -1741,6 +1820,35 @@
       } else {
         window.location.href = 'mailto:' + EMAIL;
       }
+    });
+
+    // ─── Personal Modal Logic ─────────────────────────────────────
+    const modal = document.getElementById('personal-modal');
+    const trigger = document.getElementById('personal-trigger');
+    const closeBtn = document.getElementById('modal-close-btn');
+    const overlayClose = document.getElementById('modal-overlay-close');
+
+    function openModal() {
+      modal.style.display = 'flex';
+      requestAnimationFrame(() => {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 400);
+    }
+
+    trigger && trigger.addEventListener('click', openModal);
+    closeBtn && closeBtn.addEventListener('click', closeModal);
+    overlayClose && overlayClose.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
     });
   </script>
 </body>
