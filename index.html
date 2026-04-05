@@ -59,6 +59,9 @@
       --nav-bg:       rgba(248,250,252,0.85);
     }
 
+    ::selection { background: var(--accent); color: #fff; }
+    ::-moz-selection { background: var(--accent); color: #fff; }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -891,12 +894,16 @@
       overflow-y: auto;
       padding: clamp(24px, 5vw, 60px);
       z-index: 2;
-      transform: scale(0.95);
-      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+      transform: scale(0.9) translateY(20px);
+      filter: blur(10px);
+      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), filter 0.5s ease, opacity 0.5s ease;
       box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+      opacity: 0;
     }
     #personal-modal.active .modal-content {
-      transform: scale(1);
+      transform: scale(1) translateY(0);
+      filter: blur(0);
+      opacity: 1;
     }
     .modal-close {
       position: absolute;
@@ -1147,6 +1154,7 @@
               src="https://h2phlo.com/assets/luke-wade.png"
               alt="Luke Wade"
               class="hero-photo"
+              decoding="async"
             />
           </div>
           <div class="hero-badge">
@@ -1599,16 +1607,16 @@
       </div>
       <div class="family-grid">
         <div class="family-item">
-          <img src="assets/family/family-1.jpg" alt="Luke's three children sitting together in a nursery with a gift">
+          <img src="assets/family/family-1.jpg" alt="Luke's three children sitting together in a nursery with a gift" loading="lazy">
         </div>
         <div class="family-item">
-          <img src="assets/family/family-2.jpg" alt="Luke's children celebrating Vivienne's first birthday with a custom banner">
+          <img src="assets/family/family-2.jpg" alt="Luke's children celebrating Vivienne's first birthday with a custom banner" loading="lazy">
         </div>
         <div class="family-item">
-          <img src="assets/family/family-3.jpg" alt="Two boys happily building a snowman in the backyard snow">
+          <img src="assets/family/family-3.jpg" alt="Two boys happily building a snowman in the backyard snow" loading="lazy">
         </div>
         <div class="family-item">
-          <img src="assets/family/family-4.jpg" alt="Two boys in matching Dallas jerseys smiling in the kitchen">
+          <img src="assets/family/family-4.jpg" alt="Two boys in matching Dallas jerseys smiling in the kitchen" loading="lazy">
         </div>
       </div>
     </div>
