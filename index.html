@@ -120,16 +120,23 @@
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); width: 100%; }
 
     .mobile-overlay {
-      display: none;
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.6);
       z-index: 98;
       backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       opacity: 0;
-      transition: opacity 0.3s;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.3s, visibility 0.3s;
+      display: flex;
     }
-    .mobile-overlay.open { opacity: 1; }
+    .mobile-overlay.open { 
+      opacity: 1; 
+      visibility: visible;
+      pointer-events: auto;
+    }
 
     .mobile-drawer {
       position: fixed;
@@ -974,7 +981,7 @@
       .hero-photo-ring { width: 180px; height: 180px; }
       .nav-links, .nav-cta { display: none; }
       .nav-hamburger { display: flex; }
-      .mobile-overlay, .mobile-drawer { display: flex; }
+      .mobile-drawer { display: flex; }
       .projects-grid { grid-template-columns: 1fr; }
       .hero-stats { gap: 20px; }
       .edu-card { flex-direction: column; }
